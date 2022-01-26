@@ -39,13 +39,18 @@
             />
           </clipPath>
         </defs>
+
+        <Friend />
+        <Score />
+
+        <component :is="character"></component>
         <text
           x="1000"
           y="930"
           style="font: normal 45px 'Recursive; text-transform: uppercase;"
           class="text"
         >
-          Character Name
+          {{ character }}
         </text>
         <path fill="#f0959f" d="M0 842h657v192H0z" />
         <g id="friendbubble">
@@ -79,12 +84,22 @@
 
 <script>
 import { mapState } from "vuex";
+import Artist from "@/components/Artist.vue";
+import Baker from "@/components/Baker.vue";
+import Mechanic from "@/components/Mechanic.vue";
+import Zombie from "@/components/Zombie.vue";
+import Friend from "@/components/Friend.vue";
 import GameStateStart from "@/components/GameStateStart.vue";
 
 export default {
   components: {
     // think it is like a child component
     GameStateStart,
+    Artist,
+    Baker,
+    Mechanic,
+    Zombie,
+    Friend,
   },
   data() {
     return {
@@ -97,7 +112,8 @@ export default {
   },
   methods: {
     pickCharacter() {
-      console.log(this.characterInput);
+      this.$store.commit("pickCharacter", this.characterInput);
+      this.$store.commit("updateUIState", "characterChosen");
     },
   },
 };
