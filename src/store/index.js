@@ -5,7 +5,9 @@ export default createStore({
     uiState: 'start',
     characterChoices: ['baker', 'mechanic', 'artist'],
     character: '',
+
     questionIndex: 0,
+    isFinished: false,
     score: 0,
     questions: [
       {
@@ -51,6 +53,9 @@ export default createStore({
     pickCharacter(state, character) {
       state.character = character;
     },
+    updateScore(state, amount) {
+      state.score = amount;
+    },
     updateUIState(state, uiState) {
       state.uiState = uiState;
     },
@@ -59,9 +64,16 @@ export default createStore({
       if (state.questionIndex < state.questions.length - 1) {
         state.questionIndex++;
       } else {
-        state.score = 0;
-        state.questionIndex = 0;
+        Math.sign(state.score) > 0 ? (state.uiState = 'won') : (state.uiState = 'lost');
       }
+    },
+    restartGame(state) {
+      state.uiState = 'start';
+      state.questionIndex = 0;
+      state.score = 0;
+    },
+    changeGameState(state, isFinished) {
+      state.isFinished = isFinished;
     },
   },
   actions: {},
