@@ -59,6 +59,7 @@ export default createStore({
       if (state.questionIndex < state.questions.length - 1) {
         state.questionIndex++;
       } else {
+        state.score = 0;
         state.questionIndex = 0;
       }
     },
