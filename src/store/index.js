@@ -2,6 +2,9 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
+    uiState: 'start',
+    characterChoices: ['baker', 'mechanic', 'artist'],
+    character: '',
     questions: [
       {
         question: `What's your dog's name?`,
