@@ -78,6 +78,18 @@
           />
         </g>
       </svg>
+      <div class="friendtalk">
+        <h3>
+          {{ questions[questionIndex].question }}
+        </h3>
+      </div>
+      <div class="zombietalk">
+        <p v-for="character in characterChoices" :key="character">
+          <button @click="pickQuestion">
+            {{ questions[questionIndex][character] }}
+          </button>
+        </p>
+      </div>
     </section>
   </div>
 </template>
@@ -88,6 +100,7 @@ import Artist from "@/components/Artist.vue";
 import Baker from "@/components/Baker.vue";
 import Mechanic from "@/components/Mechanic.vue";
 import Zombie from "@/components/Zombie.vue";
+import Score from "@/components/Score.vue";
 import Friend from "@/components/Friend.vue";
 import GameStateStart from "@/components/GameStateStart.vue";
 
@@ -98,6 +111,7 @@ export default {
     Artist,
     Baker,
     Mechanic,
+    Score,
     Zombie,
     Friend,
   },
@@ -108,12 +122,21 @@ export default {
   },
   computed: {
     // load the state from the store
-    ...mapState(["uiState", "questions", "character", "characterChoices"]),
+    ...mapState([
+      "uiState",
+      "questions",
+      "character",
+      "characterChoices",
+      "questionIndex",
+    ]),
   },
   methods: {
     pickCharacter() {
       this.$store.commit("pickCharacter", this.characterInput);
       this.$store.commit("updateUIState", "characterChosen");
+    },
+    pickQuestion(character) {
+      this.$store.commit('pickQuestion', character);
     },
   },
 };
